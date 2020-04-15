@@ -13,7 +13,7 @@ case class FBM(n: N, hurst: Hurst, length: N = 1) {
   private lazy val eigenvals = FBM.eigenvals(n, hurst)
 
   def fgn(gn: Vector[Double] = randomNormal(), fn: Vector[Double] => Vector[Double] = this.daviesharte(randomNormal())): Vector[Double] = {
-    val scale = (1.0 * length / n) ** hurst
+    val scale = (length.toDouble / n) ** hurst
 
     (if (hurst == pureRandom) gn else fn(gn)) * scale
   }
