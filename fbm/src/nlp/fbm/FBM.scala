@@ -54,13 +54,13 @@ object FBM {
     fourierTr(DenseVector(row.toArray)).map(_.real).toScalaVector()
   }
 
-  def fgnRow(gn: Vector[Double], gn2: Vector[Double], eigenvals: Vector[Double]) = {
+  def fgnRow(gn: Vector[Double], gn2: Vector[Double], eigenvals: Vector[Double]): Vector[Complex] = {
     val n = gn.size
-    0.until(2 * n) map {
+    0.until(2 * n).toVector map {
       case i if i == 0 => Complex(sqrt(eigenvals(i) / (2 * n)) * gn(i), 0)
-      case i if i < n  => Complex(sqrt(eigenvals(i) / (4 * n)), 0) * Complex(gn(i), gn2(i))
+      case i if i < n => Complex(sqrt(eigenvals(i) / (4 * n)), 0) * Complex(gn(i), gn2(i))
       case i if i == n => Complex(sqrt(eigenvals(i) / (2 * n)) * gn2(0), 0)
-      case i if i > n  => Complex(sqrt(eigenvals(i) / (4 * n)), 0) * Complex(gn(2 * n - i), -1 * gn2(2 * n - i))
+      case i if i > n => Complex(sqrt(eigenvals(i) / (4 * n)), 0) * Complex(gn(2 * n - i), -1 * gn2(2 * n - i))
     }
   }
 }
