@@ -3,3 +3,5 @@ out/
 *.iml
 .idea/
 .idea_modules/
+.metals/
+.bloop/
