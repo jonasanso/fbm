@@ -20,7 +20,7 @@ object Opts {
       .action((h, c) => c.copy(hurst = h))
       .text("Hurst is a Double between 0 and 1 is the hurst exponent for the fractal")
 
-    opt[N]('l', "Lenght")
+    opt[N]('l', "length")
       .action((l, c) => c.copy(lengthOpt = Some(l)))
       .text("length is used to define the scale. For scale 1 length is equal to the number of samples")
   }

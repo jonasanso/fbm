@@ -9,8 +9,8 @@ import shapeless.Witness
 
 
 object FixedSize {
-  type Sized = Size[Equal[W.`2`.T]]
-  type DoublesFixedSize = Vector[Double] Refined Size[Equal[W.`2`.T]]
+  type Sized = Size[Equal[2]]
+  type DoublesFixedSize = Vector[Double] Refined Size[Equal[2]]
 
   def multiply(v: DoublesFixedSize, d: Double): DoublesFixedSize = refineV[Sized].unsafeFrom(v.map(_ * d))
 

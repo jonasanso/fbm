@@ -5,15 +5,7 @@ import mill.util.Ctx
 
 
 object fbm extends ScalaModule with GraalVM {
-  def scalaVersion = "2.12.8"
-
-  // compile flags
-  def scalacOptions = Seq(
-    "-feature",
-    "-deprecation",
-    "-Ypartial-unification",
-    "-Ywarn-value-discard"
-  )
+  def scalaVersion = "2.13.1"
 
   // entry point
   def mainClass = Some("nlp.fbm.Main")
@@ -34,7 +26,7 @@ object fbm extends ScalaModule with GraalVM {
   }
 
   object test extends Tests {
-    override def ivyDeps = Agg(ivy"com.lihaoyi::utest::0.6.3")
+    override def ivyDeps = Agg(ivy"com.lihaoyi::utest::0.7.2")
 
     def testFrameworks = T(Seq("utest.runner.Framework"))
   }

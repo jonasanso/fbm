@@ -7,7 +7,7 @@ import eu.timepit.refined.numeric._
 
 package object fbm {
   type N = Int Refined Positive
-  type ZeroToOne = Not[Less[W.`0.0`.T]] And Not[Greater[W.`1.0`.T]]
+  type ZeroToOne = Not[Less[0.0]] And Not[Greater[1.0]]
   type Hurst = Double Refined ZeroToOne
 
   implicit class DoubleOps(a: Double) {
