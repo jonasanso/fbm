@@ -3,14 +3,22 @@ package nlp.fbm
 import eu.timepit.refined.scopt._
 import eu.timepit.refined.auto._
 
-case class Opts(n: N, hurst: Hurst, lengthOpt: Option[N]) {
+case class Opts(wealth: Double, n: N, hurst: Hurst, lengthOpt: Option[N]) {
   val length = lengthOpt.getOrElse(n)
 }
 
 object Opts {
-  val default = Opts(100000, 0.68, None)
+  private val INITIAL_VALUE = 100d
+  private val FOUR_YEAR_CYCLE: N = 365 * 4
+  private val DEFAULT_HURST: Hurst = 0.68
+
+  val default = Opts(INITIAL_VALUE, FOUR_YEAR_CYCLE, DEFAULT_HURST, None)
   val parser = new scopt.OptionParser[Opts]("fbm") {
     head("Generate fractal gaussian time series")
+
+    opt[Double]('w', "wealth")
+      .action((x, c) => c.copy(wealth = x))
+      .text("initial wealth")
 
     opt[N]('n', "num")
       .action((x, c) => c.copy(n = x))

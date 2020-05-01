@@ -1,26 +1,48 @@
 package nlp.fbm
+import BasicMath._
 
 object Main {
+
   def main(args: Array[String]): Unit = {
     Opts.parser.parse(args, Opts.default).foreach(run)
   }
 
-  private def run(opts: Opts) = {
-    def doubles(): Vector[Double] = FBM(opts.n, opts.hurst, opts.length).fgn()
+  private def run(opts: Opts): Unit = {
+    def history(init: Double): Vector[Double] = {
+      FBM(opts.n, opts.hurst, opts.length).fgn()
+        .foldLeft(Vector(init)) { (acc, d) =>
+          val next = if (acc.last > 0) truncate(acc.last + d) else 0
+          acc.appended(next)
+        }
+    }
 
-    val series = Vector.fill(5)(doubles()).transpose
+    val segment1 = history(opts.wealth)
+    val segment2 = history(segment1.last)
+    val segment3 = history(segment2.last)
+    val segment4 = history(segment3.last)
+
+    val series = segment1 ++ segment2 ++ segment3 ++ segment4
     for {
-      Vector(a1, a2, a3, a4, a5) <- series
+      w <- series
     } {
-      println(s"""{"series1": $a1,"series2": $a2,"series3": $a3,"series4": $a4,"series5": $a5}""")
+      println(s"""{"wealth": $w}""")
       Thread.sleep(100)
     }
-    // Give some timo to jplot to render the results
+    // Give some time to jplot to render the results
     Thread.sleep(3000)
   }
 }
 
 
+object BasicMath {
+  def truncate(n: Double): Double = {
+    math.floor(n * 100) / 100 match {
+      case Double.PositiveInfinity => Double.MaxValue
+      case x if x > 0 => x
+      case _ => 0
+    }
+  }
 
+}
 
 
