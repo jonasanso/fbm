@@ -24,7 +24,7 @@ object Main {
       w <- history(opts.wealth, Vector.fill(opts.numSegments)(fgn()).flatten)
     } {
       println(s"""{"wealth": $w}""")
-      if (ConsoleInput.waitForInput(100.millis)) ConsoleInput.waitForInput(Duration.Inf)
+      if (ConsoleInput.waitForInput(opts.tempo)) ConsoleInput.waitForInput(Duration.Inf)
     }
     // Give some time to jplot to render the results
     Thread.sleep(3000)
