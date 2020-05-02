@@ -7,6 +7,7 @@ import mill.util.Ctx
 object fbm extends ScalaModule with GraalVM {
   def scalaVersion = "2.13.1"
 
+
   // entry point
   def mainClass = Some("nlp.fbm.Main")
 
@@ -35,18 +36,6 @@ object fbm extends ScalaModule with GraalVM {
 
 trait GraalVM {
   val options = Vector(
-    "--verbose",
-    "--no-server",
-    "--no-fallback",
-    "--allow-incomplete-classpath",
-    //"--static", //requires static libc and zlib
-    "--report-unsupported-elements-at-runtime",
-    "-H:+ReportExceptionStackTraces",
-    "-H:+ReportUnsupportedElementsAtRuntime",
-    "-H:+TraceClassInitialization",
-    "-H:+PrintClassInitialization",
-    "--initialize-at-build-time=scala.runtime.Statics$VM",
-    "--initialize-at-run-time=java.lang.Math$RandomNumberGeneratorHolder",
   )
 
   def buildNative(jar: PathRef, name: String)(implicit ctx: Ctx.Dest): Unit = {
