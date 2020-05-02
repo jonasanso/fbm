@@ -1,6 +1,9 @@
 package nlp.fbm
+
 import BasicMath._
 import eu.timepit.refined.auto._
+import terminal.ConsoleInput
+import scala.concurrent.duration._
 
 object Main {
 
@@ -21,7 +24,7 @@ object Main {
       w <- history(opts.wealth, Vector.fill(opts.numSegments)(fgn()).flatten)
     } {
       println(s"""{"wealth": $w}""")
-      Thread.sleep(100)
+      if (ConsoleInput.waitForInput(100.millis)) ConsoleInput.waitForInput(Duration.Inf)
     }
     // Give some time to jplot to render the results
     Thread.sleep(3000)
